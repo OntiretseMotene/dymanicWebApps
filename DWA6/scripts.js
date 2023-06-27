@@ -5,7 +5,6 @@ function createBookPreview({ author, id, image, title }) {
     const element = document.createElement('button');
     element.classList = 'preview';
     element.setAttribute('data-preview', id);
-
     element.innerHTML = `
         <img
             class="preview__image"
@@ -22,8 +21,9 @@ function createBookPreview({ author, id, image, title }) {
 }
 let page = 1;
 let matches = books
+let BOOKS_PER_PAGE = 36
 
-//const starting = document.createDocumentFragment()
+const starting = document.createDocumentFragment()
 
 
 for (const book of matches.slice(0, BOOKS_PER_PAGE)) {
