@@ -21,7 +21,7 @@ function createBookPreview({ author, id, image, title }) {
 }
 let page = 1;
 let matches = books
-let BOOKS_PER_PAGE = 36
+//let BOOKS_PER_PAGE = 36
 
 const starting = document.createDocumentFragment()
 
@@ -33,7 +33,40 @@ for (const book of matches.slice(0, BOOKS_PER_PAGE)) {
 
 document.querySelector('[data-list-items]').appendChild(starting)
 
-const genreHtml = document.createDocumentFragment()
+//Author and Genre tabs ABSTRACTION
+
+function createOptionElement(value, text) {
+  const element = document.createElement('option')
+  element.value = value
+  element.innerText = text
+  return element
+}
+
+function appendOptionsToContainer(container, options) {
+  const fragment = document.createDocumentFragment()
+  for (const [value, text] of Object.entries(options)) {
+    const element = createOptionElement(value, text)
+    fragment.appendChild(element)
+  }
+  container.appendChild(fragment)
+}
+
+const genreContainer = document.querySelector('[data-search-genres]')
+const genreOptions = {
+  any: 'All Genres',
+  ...genres
+}
+appendOptionsToContainer(genreContainer, genreOptions)
+
+const authorContainer = document.querySelector('[data-search-authors]')
+const authorOptions = {
+  any: 'All Authors',
+  ...authors
+}
+appendOptionsToContainer(authorContainer, authorOptions)
+
+
+/*const genreHtml = document.createDocumentFragment()
 const firstGenreElement = document.createElement('option')
 firstGenreElement.value = 'any'
 firstGenreElement.innerText = 'All Genres'
@@ -61,7 +94,7 @@ for (const [id, name] of Object.entries(authors)) {
     authorsHtml.appendChild(element)
 }
 
-document.querySelector('[data-search-authors]').appendChild(authorsHtml)
+document.querySelector('[data-search-authors]').appendChild(authorsHtml)*/
 
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.querySelector('[data-settings-theme]').value = 'night'
