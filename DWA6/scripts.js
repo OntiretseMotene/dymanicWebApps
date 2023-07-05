@@ -21,7 +21,7 @@ function createPreviewButton({ author, id, image, title }) {
 }
 
 let page = 1;
-let matches = books
+let matches = books;
 
 const starting = document.createDocumentFragment()
 
@@ -33,16 +33,24 @@ for (const book of matches.slice(0, BOOKS_PER_PAGE)) {
 
 document.querySelector('[data-list-items]').appendChild(starting)
 
+function createSearchOptionElement([id, name]) {
+    const element = document.createElement('option')
+    element.value = id
+    element.innerText = name
+
+    return element
+
+}
+
 const genreHtml = document.createDocumentFragment()
 const firstGenreElement = document.createElement('option')
 firstGenreElement.value = 'any'
 firstGenreElement.innerText = 'All Genres'
 genreHtml.appendChild(firstGenreElement)
 
-for (const [id, name] of Object.entries(genres)) {
-    const element = document.createElement('option')
-    element.value = id
-    element.innerText = name
+for (const search of Object.entries(genres)) {
+    const element = createSearchOptionElement(search)
+
     genreHtml.appendChild(element)
 }
 
@@ -54,10 +62,8 @@ firstAuthorElement.value = 'any'
 firstAuthorElement.innerText = 'All Authors'
 authorsHtml.appendChild(firstAuthorElement)
 
-for (const [id, name] of Object.entries(authors)) {
-    const element = document.createElement('option')
-    element.value = id
-    element.innerText = name
+for (const search of Object.entries(authors)) {
+    const element = createSearchOptionElement(search)
     authorsHtml.appendChild(element)
 }
 
