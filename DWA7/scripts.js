@@ -26,6 +26,29 @@ function createPreviewElement({ author, id, image, title }) {
     return element
 }
 
+const selectors = {
+    listItems: document.querySelector('[data-list-items]'),
+    searchGenres: document.querySelector('[data-search-genres]'),
+    searchAuthors: document.querySelector('[data-search-authors]'),
+    settingsTheme: document.querySelector('[data-settings-theme]'),
+    settingsOverlay: document.querySelector('[data-settings-overlay]'),
+    listButton: document.querySelector('[data-list-button]'),
+    searchCancel: document.querySelector('[data-search-cancel]'),
+    settingsCancel: document.querySelector('[data-settings-cancel]'),
+    headerSearch: document.querySelector('[data-header-search'),
+    headerSettings: document.querySelector('[data-header-settings]'),
+    listClose: document.querySelector('[data-lust-close]'),
+    settingsForm: document.querySelector('[data-settings-form]'),
+    searchForm: document.querySelector('[data-search-form]'),
+    listMessage: document.querySelector('[data-list-message]'),
+    listActive: document.querySelector('[adata-list-active]'),
+    listBlur: document.querySelector('[data-list-blur]'),
+    listImage: document.querySelector('[data-list-image]'),
+    listTitle: document.querySelector('[data-list-title]'),
+    listSubTitle: document.querySelector('[data-list-subtitle]'),
+    listDescription: document.querySelector('[data-list-description]'),
+}
+
 let page = 1;
 let matches = books;
 
@@ -37,7 +60,7 @@ for (const book of matches.slice(0, BOOKS_PER_PAGE)) {
     starting.appendChild(element)
 }
 
-document.querySelector('[data-list-items]').appendChild(starting)
+selectors.listItems.appendChild(starting);
 
 //function createSearchOptionElement([id, name]) {
 //    const element = document.createElement('option')
@@ -52,9 +75,9 @@ document.querySelector('[data-list-items]').appendChild(starting)
  * The createSearchOptions function generates HTML for search options
  * Alinged to the Single Responsibility Principle
  * It creates the options element and appends it to the container element
- * @param {*} container 
- * @param {*} data 
- * @param {*} defaultOptionText 
+ * @param {HTMLElement} container 
+ * @param {Object} data 
+ * @param {String} defaultOptionText 
  */
 function createSearchOptions(container, data, defaultOptionText) {
     const fragment = document.createDocumentFragment();
@@ -80,10 +103,10 @@ function createSearchOptions(container, data, defaultOptionText) {
  * It is an application of the Open/Close Principle which allows for easy code extension or behaviour modification
  */
 function initialiseSearchOptions() {
-    const genreContainer = document.querySelector('[data-search-genres]');
+    const genreContainer = selectors.searchGenres;
     createSearchOptions(genreContainer, genres, 'All Genres');
 
-    const authorContainer = document.querySelector('[data-search-authors]');
+    const authorContainer = selectors.searchAuthors;
     createSearchOptions(authorContainer, authors, 'All Authors');
 }
 
@@ -132,49 +155,49 @@ function setTheme(theme) {
 }
 
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.querySelector('[data-settings-theme]').value = 'night'
+    selectors.settingsTheme.value = 'night'
     setTheme('night');
 } else {
-    document.querySelector('[data-settings-theme]').value = 'day'
+    selectors.settingsTheme.value = 'day'
     setTheme('day');
 }
 
-document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
+selectors.settingsForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const { theme } = Object.fromEntries(formData);
     setTheme(theme);
-    document.querySelector('[data-settings-overlay]').open = false;
+    selectors.settingsOverlay.open = false;
 });
 
 
-document.querySelector('[data-list-button]').innerText = `Show more (${books.length - BOOKS_PER_PAGE})`
-document.querySelector('[data-list-button]').disabled = (matches.length - (page * BOOKS_PER_PAGE)) > 0
+selectors.listButton.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`
+selectors.listButton.disabled = (matches.length - (page * BOOKS_PER_PAGE)) > 0
 
-document.querySelector('[data-list-button]').innerHTML = `
+selectors.listButton.innerHTML = `
     <span>Show more</span>
     <span class="list__remaining"> (${(matches.length - (page * BOOKS_PER_PAGE)) > 0 ? (matches.length - (page * BOOKS_PER_PAGE)) : 0})</span>
 `
 
-document.querySelector('[data-search-cancel]').addEventListener('click', () => {
-    document.querySelector('[data-search-overlay]').open = false
+selectors.searchCancel.addEventListener('click', () => {
+    selectors.searchOverlay.open = false
 })
 
-document.querySelector('[data-settings-cancel]').addEventListener('click', () => {
-    document.querySelector('[data-settings-overlay]').open = false
+selectors.settingsCancel.addEventListener('click', () => {
+    selectors.settingsOverlay.open = false
 })
 
-document.querySelector('[data-header-search]').addEventListener('click', () => {
-    document.querySelector('[data-search-overlay]').open = true 
-    document.querySelector('[data-search-title]').focus()
+selectors.headerSearch.addEventListener('click', () => {
+    selectors.searchOverlay.open = true 
+    selectors.searchTitle.focus()
 })
 
-document.querySelector('[data-header-settings]').addEventListener('click', () => {
-    document.querySelector('[data-settings-overlay]').open = true 
+selectors.headerSettings.addEventListener('click', () => {
+    selectors.settingsOverlay.open = true 
 })
 
-document.querySelector('[data-list-close]').addEventListener('click', () => {
-    document.querySelector('[data-list-active]').open = false
+selectors.listClose.addEventListener('click', () => {
+    selectors.listActive.open = false
 })
 
 // document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
@@ -193,7 +216,7 @@ document.querySelector('[data-list-close]').addEventListener('click', () => {
 //     document.querySelector('[data-settings-overlay]').open = false
 // })
 
-document.querySelector('[data-search-form]').addEventListener('submit', (event) => {
+selectors.searchForm.addEventListener('submit', (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     const filters = Object.fromEntries(formData)
@@ -220,12 +243,12 @@ document.querySelector('[data-search-form]').addEventListener('submit', (event) 
     matches = result
 
     if (result.length < 1) {
-        document.querySelector('[data-list-message]').classList.add('list__message_show')
+        selectors.listMessage.classList.add('list__message_show')
     } else {
-        document.querySelector('[data-list-message]').classList.remove('list__message_show')
+        selectors.listMessage.classList.remove('list__message_show')
     }
 
-    document.querySelector('[data-list-items]').innerHTML = ''
+    selectors.listItems.innerHTML = ''
     const newItems = document.createDocumentFragment()
 
     for (const book of result.slice(0, BOOKS_PER_PAGE)) {
@@ -234,19 +257,19 @@ document.querySelector('[data-search-form]').addEventListener('submit', (event) 
         newItems.appendChild(element)
     }
 
-    document.querySelector('[data-list-items]').appendChild(newItems)
-    document.querySelector('[data-list-button]').disabled = (matches.length - (page * BOOKS_PER_PAGE)) < 1
+    selectors.listItems.appendChild(newItems)
+    selectors.listButton.disabled = (matches.length - (page * BOOKS_PER_PAGE)) < 1
 
-    document.querySelector('[data-list-button]').innerHTML = `
+    selectors.listButton.innerHTML = `
         <span>Show more</span>
         <span class="list__remaining"> (${(matches.length - (page * BOOKS_PER_PAGE)) > 0 ? (matches.length - (page * BOOKS_PER_PAGE)) : 0})</span>
     `
 
     window.scrollTo({top: 0, behavior: 'smooth'});
-    document.querySelector('[data-search-overlay]').open = false
+    selectors.searchOverlay.open = false
 })
 
-document.querySelector('[data-list-button]').addEventListener('click', () => {
+selectors.listButton.addEventListener('click', () => {
     const fragment = document.createDocumentFragment()
 
     for (const book of matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE)) {
@@ -255,11 +278,11 @@ document.querySelector('[data-list-button]').addEventListener('click', () => {
         fragment.appendChild(element)
     }
 
-    document.querySelector('[data-list-items]').appendChild(fragment)
+    selectors.listItems.appendChild(fragment)
     page += 1
 })
 
-document.querySelector('[data-list-items]').addEventListener('click', (event) => {
+selectors.listItems.addEventListener('click', (event) => {
     const pathArray = Array.from(event.path || event.composedPath())
     let active = null
 
@@ -279,11 +302,11 @@ document.querySelector('[data-list-items]').addEventListener('click', (event) =>
     }
     
     if (active) {
-        document.querySelector('[data-list-active]').open = true
-        document.querySelector('[data-list-blur]').src = active.image
-        document.querySelector('[data-list-image]').src = active.image
-        document.querySelector('[data-list-title]').innerText = active.title
-        document.querySelector('[data-list-subtitle]').innerText = `${authors[active.author]} (${new Date(active.published).getFullYear()})`
-        document.querySelector('[data-list-description]').innerText = active.description
+        selectors.listActive.open = true
+        selectors.listBlur.src = active.image
+        selectors.listImage.src = active.image
+        selectors.listTitle.innerText = active.title
+        selectors.listSubTitle.innerText = `${authors[active.author]} (${new Date(active.published).getFullYear()})`
+        selectors.listDescription.innerText = active.description
     }
 })
