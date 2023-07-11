@@ -3,9 +3,10 @@ import { books, authors, genres, BOOKS_PER_PAGE } from './data.js'
 /**
  * This function is responsible for displaying book previews
  * 
- * @param {*} param0 
+ * @param {Object} 
  * @returns - element
  */
+
 function createPreviewElement({ author, id, image, title }) {
     const element = document.createElement('button');
     element.classList = 'preview';
@@ -62,14 +63,6 @@ for (const book of matches.slice(0, BOOKS_PER_PAGE)) {
 
 selectors.listItems.appendChild(starting);
 
-//function createSearchOptionElement([id, name]) {
-//    const element = document.createElement('option')
-//    element.value = id
-//    element.innerText = name
-
-//    return element
-
-//}
 
 /**
  * The createSearchOptions function generates HTML for search options
@@ -111,32 +104,6 @@ function initialiseSearchOptions() {
 }
 
 initialiseSearchOptions();
-//const genreHtml = document.createDocumentFragment()
-//const firstGenreElement = document.createElement('option')
-//firstGenreElement.value = 'any'
-//firstGenreElement.innerText = 'All Genres'
-//genreHtml.appendChild(firstGenreElement)
-
-//for (const search of Object.entries(genres)) {
-//    const element = createSearchOptionElement(search)
-
-//    genreHtml.appendChild(element)
-//}
-
-//document.querySelector('[data-search-genres]').appendChild(genreHtml)
-
-//const authorsHtml = document.createDocumentFragment()
-//const firstAuthorElement = document.createElement('option')
-//firstAuthorElement.value = 'any'
-//firstAuthorElement.innerText = 'All Authors'
-//authorsHtml.appendChild(firstAuthorElement)
-
-//for (const search of Object.entries(authors)) {
-//    const element = createSearchOptionElement(search)
-//    authorsHtml.appendChild(element)
-//}
-
-//document.querySelector('[data-search-authors]').appendChild(authorsHtml)
 
 /**
  * The setTheme function sets the theme according to the CSS colour styling.
@@ -200,21 +167,6 @@ selectors.listClose.addEventListener('click', () => {
     selectors.listActive.open = false
 })
 
-// document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
-//     event.preventDefault()
-//     const formData = new FormData(event.target)
-//     const { theme } = Object.fromEntries(formData)
-
-//     if (theme === 'night') {
-//         document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
-//         document.documentElement.style.setProperty('--color-light', '10, 10, 20');
-//     } else {
-//         document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
-//         document.documentElement.style.setProperty('--color-light', '255, 255, 255');
-//     }
-    
-//     document.querySelector('[data-settings-overlay]').open = false
-// })
 
 selectors.searchForm.addEventListener('submit', (event) => {
     event.preventDefault()
