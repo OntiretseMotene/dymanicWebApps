@@ -120,13 +120,13 @@ function setTheme(theme) {
     }
 }
 
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        selector.settingsTheme.value = 'night';
-        setTheme('night');
-    } else {
-        selector.settingsTheme.value = 'day';
-        setTheme('day');
-    }
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    selector.settingsTheme.value = 'night';
+    setTheme('night');
+} else {
+    selector.settingsTheme.value = 'day';
+    setTheme('day');
+}
 
 selector.listButton.addEventListener('click', () => {
   page++;
