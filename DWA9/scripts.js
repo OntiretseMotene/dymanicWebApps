@@ -3,7 +3,7 @@ import { books, authors, genres, BOOKS_PER_PAGE } from './data.js';
 
 import { BookPreview } from './book-preview.js'; 
 
-
+import { SearchOptions } from './search-options.js';
 
 let page = 1;
 let matches = books;
@@ -18,6 +18,7 @@ const selector = {
     searchCancel: document.querySelector('[data-search-cancel]'),
     settingsCancel: document.querySelector('[data-settings-cancel]'),
     headerSearch: document.querySelector('[data-header-search'),
+    searchTitle: document.querySelector('[data-search-title]'),
     searchOverlay:document.querySelector('[data-search-overlay]'),
     headerSettings: document.querySelector('[data-header-settings]'),
     listClose: document.querySelector('[data-list-close]'),
@@ -75,11 +76,13 @@ updateShowMoreButton();
      defaultOption.innerText = defaultOptionText;
      fragment.appendChild(defaultOption);
 
+     if (data) {
      for (const [id, name] of Object.entries(data)) {
          const option = document.createElement('option');
          option.value = id;
          option.innerText = name;
          fragment.appendChild(option);
+     }
 
      }
     
@@ -159,23 +162,21 @@ selector.searchCancel.addEventListener('click', () => {
   selector.searchOverlay.open = false;
 });
 
-selector.searchForm.addEventListener('submit', (event) => {
+document.querySelector('search-options').addEventListener('filters-changed', (event) => {
   event.preventDefault();
-  const formData = new FormData(event.target);
-  const filters = Object.fromEntries(formData);
+  const { genre, author } = event.detail;
   const result = [];
 
   for (const book of books) {
-      let genreMatch = filters.genre === 'any';
+      let genreMatch = genre === 'any';
 
      for (const singleGenre of book.genres) {
       if (genreMatch) break;
-      if (singleGenre === filters.genre) { genreMatch = true; }
+      if (singleGenre === genre) { genreMatch = true; }
      }
 
      if (
-      (filters.title.trim() === '' || book.title.toLowerCase().includes(filters.title.toLowerCase())) && 
-      (filters.author === 'any' || book.author === filters.author) && 
+      (author === 'any' || book.author === author) && 
       genreMatch
      ) {
       result.push(book);
@@ -192,7 +193,6 @@ matches = result;
 
   selector.listItems.innerHTML = '';
   const newItems = document.createDocumentFragment();
-
   const newBooks = matches.slice(0, BOOKS_PER_PAGE);
   appendBooksToPage(newBooks);
   updateShowMoreButton();

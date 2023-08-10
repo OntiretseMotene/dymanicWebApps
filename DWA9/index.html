@@ -28,7 +28,8 @@
 
     <script src="./scripts.js" type = "module" defer></script>
     <script src="./data.js" type = "module" defer></script>
-    <scripts src="./book-preview.js" type = "module" defer></scripts>
+    <script src="./book-preview.js" type = "module" defer></script>
+    <script src="./search-options.js" type = "module" defer></script>
   </head>
   <body>
 
@@ -97,6 +98,8 @@
       <button class="list__button" data-list-button></button>
     </main>
 
+    <!--Updated search-options web component-->
+    <search-options></search-options> 
 
     <dialog class="overlay" data-list-active>
       <div class="overlay__preview"><img class="overlay__blur" data-list-blur src=""/><img class="overlay__image" data-list-image src=""/></div>
